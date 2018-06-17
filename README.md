@@ -1,2 +1,2 @@
-# -Assignment-2
+# Assignment-2
 Handwritten Digit Recognition
