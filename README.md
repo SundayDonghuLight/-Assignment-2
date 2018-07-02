@@ -71,10 +71,12 @@ print("測試資料辨識率:",np.mean(clf.predict(newX_test) == y_test))
 <p>　　再更低的5或1時才有比較顯著的負面影響。</p>
 
 ### 不同辨識器間的比較
-<p>可參考"Different classifiers comparison.ipynb"檔案</p>
-<p>使用sklearn套件，目前所學的方法中辨識效果最佳的為SVC辨識器，</p>
-<p>而類神經網路也有著差不多的辨識率與更快一些的速度，其他幾種線性辨識器效果就差上了一截。</p>
-<p>比較讓我感到意外的是KNeighborsClassifier居然發揮了這麼高的成效，雖然花了較久的時間，但辨識率直逼SVC，</p>
-<p>一開始還因為其單純的概念有點小看他</p>
-
-<p></p>
+<p>　　可參考"Different classifiers comparison.ipynb"檔案</p>
+<p>　　使用sklearn套件，目前所學的方法中辨識效果最佳的為SVC辨識器，</p>
+<p>　　而類神經網路也有著差不多的辨識率與更快一些的速度，其他幾種線性辨識器效果就差上了一截。</p>
+<p>　　比較讓我感到意外的是KNeighborsClassifier居然發揮了這麼高的成效，雖然花了較久的時間，但辨識率直逼SVC，</p>
+<p>　　一開始還因為其單純的概念有點小看他，現在知道在進行辨識時，KNeighbors還是相當值得一試的。</p>
+<p>　　再來還可以看到一些有趣的發現，像是DecisionTree如果用原訓練資料下去跑辨識率必然會是100%這點，</p>
+<p>　　和雖然1棵樹只有84%，但用RandomForest就有92%的辨識率了，且可以注意到訓練資料的辨識率不一定會再是100%。</p>
+<p>　　最後幾個Ensemble Methods有點小失誤，沒注意看就直接用了預設，而Bagging的預設就是DecisionTree，</p>
+<p>　　所以其實跟使用RandomForest是一樣的。</p>
