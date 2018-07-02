@@ -1,6 +1,11 @@
 # Introductory Machine Learning Programming Assignment 2
 ## Handwritten Digit Recognition (MNIST 手寫數字資料集辨識)
 
+MNIST_Recognition.py　為辨識手寫數字資料集的程式碼
+PCA - reduced dimensions compare.ipynb　是PCA降至不同維度下運行結果的Jupyter Notebook
+Different classifiers comparison.ipynb　則是使用不同辨識器運行下的Jupyter Notebook
+failure report　資料夾則放了一些剛開始時失敗得檔案
+
 ### 程式說明
 <ol>
   <li>
