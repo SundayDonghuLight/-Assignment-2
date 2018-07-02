@@ -58,6 +58,23 @@ print("測試資料辨識率:",np.mean(clf.predict(newX_test) == y_test))
   </li>
 </ol>
 
+### 運行結果
+<p>　　PCA：降至30維 (n_components=30)</p>
+<p>　　辨識器：SVC (Support Vector Classification)</p>
+<p>　　訓練資料辨識率：99.10%</p>
+<p>　　測試資料辨識率：98.54%</p>
 
-<p></p>
+### 化減至不同維度的比較
+<p>　　在"PCA - reduced dimensions compare.ipynb"檔案中有做比較</p>
+<p>　　可以看到解釋率在95~97%時確實有不錯的辨識率，不過以這個例子來說，最佳的範圍是在降至更低後的30維左右。</p>
+<p>　　而在絕大多數的範圍內，使用PCA都能保持不錯的辨識率，即便降到了10維也都還有95%左右的辨識率，</p>
+<p>　　再更低的5或1時才有比較顯著的負面影響。</p>
+
+### 不同辨識器間的比較
+<p>可參考"Different classifiers comparison.ipynb"檔案</p>
+<p>使用sklearn套件，目前所學的方法中辨識效果最佳的為SVC辨識器，</p>
+<p>而類神經網路也有著差不多的辨識率與更快一些的速度，其他幾種線性辨識器效果就差上了一截。</p>
+<p>比較讓我感到意外的是KNeighborsClassifier居然發揮了這麼高的成效，雖然花了較久的時間，但辨識率直逼SVC，</p>
+<p>一開始還因為其單純的概念有點小看他</p>
+
 <p></p>
