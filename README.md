@@ -37,12 +37,24 @@ X_test, y_test = mnist.data[test_index], mnist.target[test_index]</pre></code>
     Dimension Reduction：
     <p>使用sklearn.decomposition.PCA套件進行降維，參數<code>n_components</code>設為30，即將數據降至30維。</p>
     <p>經測試在降到30維左右時有著最佳的辨識率，詳細數據可參考根目錄下PCA - reduced dimensions compare.ipynb檔案。</p>
-    <p>維度化減完在進行辨識器的訓練前我們先對資料進行歸一化(normalization)的動作，把每一筆input data都除上255使其值落在0~1之間</p>
+    <p>維度化減完在進行辨識器的訓練前我們先對資料進行歸一化(normalization)的動作，</p>
+    <p>把每一筆input data都除上255使其值落在0~1之間。</p>
 <pre><code>pca = PCA(n_components=30)                  #使用PCA套件，設定降至30維
 newX_train = pca.fit_transform(X_train)     #用訓練資料配適降階用的半正交矩陣並把轉換後結果存至newX_train
 newX_test = pca.transform(X_test)           #用剛剛找出的矩陣對訓練資料也進行轉換，存入newX_test
 newX_train = newX_train/255                 #將資料進行歸一化(normalization)
-newX_test = newX_test/255</pre></code>
+newX_test = newX_test/255                   #這邊除255等同於sklearn的MinMaxScaler </pre></code>
+  </li>
+  <li>
+    訓練與辨識：
+    <p>採用Support Vector Machine作為我們的辨識器，用sklearn通用的<code>clf.fit</code>函數來進行模型的訓練。</p>
+    <p>最後的指令會產生一條與資料量等長的陣列，如果該項的預測結果與其實際label相同為1，不同則為2，</p>
+    <p>將<code>np.mean</code>function作用在這個陣列後即可得到辨識率。</p>
+<pre><code>clf = SVC()
+clf.fit(newX_train, y_train)
+print("訓練資料辨識率:",np.mean(clf.predict(newX_train) == y_train))
+print("測試資料辨識率:",np.mean(clf.predict(newX_test) == y_test))
+</pre></code>
   </li>
 </ol>
 
