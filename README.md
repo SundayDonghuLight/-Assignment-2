@@ -4,7 +4,7 @@
 ### 程式說明
 <ol>
   <li>
-    載入套件與資料集: <ul>
+    載入套件與資料集： <ul>
     <li>numpy: 能在python中很直覺的實現數學上各種矩陣運算的強大套件</li>
     <li>random: 包含許多與隨機亂數相關指令的套件，會用到其中<code>random.shuffle</code>的洗牌功能</li>
     <li>matplotlib.pyplot: 能進行繪圖，可用來顯示和儲存圖像，使用上與MATLAB相似</li>
@@ -21,9 +21,11 @@ from sklearn.datasets import fetch_mldata
 mnist = fetch_mldata('MNIST original')                #載入'MNIST original'資料集存入變數mnist中</pre></code>
   </li>
   <li>
-    產生訓練資料與測試資料:
-    mnist總共有70000筆data
-    由於
+    產生訓練資料與測試資料：
+    <p>mnist總共有70000筆data，每筆皆為28*28像素的手寫數字灰度圖，而target則是對應的數字。</p>
+    <p>由於原始資料有照0~9的順序排列，所以不能直接將前60000筆當作訓練資料，後10000萬筆當測資，</p>
+    <p>這邊靠<code>random.shuffle</code>的應用從這70000筆資料中隨機挑60000筆作訓練資料，剩下10000萬筆當測試資料。</p>
+    <p>將訓練用的data與target分別存入X_train與y_train中，測試資料同樣分別存入X_test與y_test中。</p>
 <pre><code>index = np.arange(len(mnist.data))                                     #產生與data數相同長度(0~69999)的陣列
 random.shuffle(index)                                                  #將該陣列隨機洗牌，打亂順序
 train_index = index[0:60000]                                           #前60000筆對應的編號作為訓練資料
