@@ -33,4 +33,19 @@ test_index = index[60000:70000]                                        #後10000
 X_train, y_train = mnist.data[train_index], mnist.target[train_index]
 X_test, y_test = mnist.data[test_index], mnist.target[test_index]</pre></code>
   </li>
+  <li>
+    Dimension Reduction：
+    <p>使用sklearn.decomposition.PCA套件進行降維，參數<code>n_components</code>設為30，即將數據降至30維。</p>
+    <p>經測試在降到30維左右時有著最佳的辨識率，詳細數據可參考根目錄下PCA - reduced dimensions compare.ipynb檔案。</p>
+    <p>維度化減完在進行辨識器的訓練前我們先對資料進行歸一化(normalization)的動作，把每一筆input data都除上255使其值落在0~1之間</p>
+<pre><code>pca = PCA(n_components=30)                  #使用PCA套件，設定降至30維
+newX_train = pca.fit_transform(X_train)     #用訓練資料配適降階用的半正交矩陣並把轉換後結果存至newX_train
+newX_test = pca.transform(X_test)           #用剛剛找出的矩陣對訓練資料也進行轉換，存入newX_test
+newX_train = newX_train/255                 #將資料進行歸一化(normalization)
+newX_test = newX_test/255</pre></code>
+  </li>
 </ol>
+
+
+<p></p>
+<p></p>
