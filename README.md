@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn.svm import SVC
 from sklearn.datasets import fetch_mldata
-mnist = fetch_mldata('MNIST original')                #載入'MNIST original'資料集存入變數mnist中</pre></code>
+mnist = fetch_mldata('MNIST original')</pre></code>
   </li>
   <li>
     產生訓練資料與測試資料：
@@ -26,10 +26,10 @@ mnist = fetch_mldata('MNIST original')                #載入'MNIST original'資
     <p>由於原始資料有照0~9的順序排列，所以不能直接將前60000筆當作訓練資料，後10000萬筆當測資，</p>
     <p>這邊靠<code>random.shuffle</code>的應用從這70000筆資料中隨機挑60000筆作訓練資料，剩下10000萬筆當測試資料。</p>
     <p>將訓練用的data與target分別存入X_train與y_train中，測試資料同樣分別存入X_test與y_test中。</p>
-<pre><code>index = np.arange(len(mnist.data))                                     #產生與data數相同長度(0~69999)的陣列
-random.shuffle(index)                                                  #將該陣列隨機洗牌，打亂順序
-train_index = index[0:60000]                                           #前60000筆對應的編號作為訓練資料
-test_index = index[60000:70000]                                        #後10000筆對應的編號則作為測試資料
+<pre><code>index = np.arange(len(mnist.data))
+random.shuffle(index)
+train_index = index[0:60000]
+test_index = index[60000:70000]
 X_train, y_train = mnist.data[train_index], mnist.target[train_index]
 X_test, y_test = mnist.data[test_index], mnist.target[test_index]</pre></code>
   </li>
@@ -39,11 +39,11 @@ X_test, y_test = mnist.data[test_index], mnist.target[test_index]</pre></code>
     <p>經測試在降到30維左右時有著最佳的辨識率，詳細數據可參考根目錄下PCA - reduced dimensions compare.ipynb檔案。</p>
     <p>維度化減完在進行辨識器的訓練前我們先對資料進行歸一化(normalization)的動作，</p>
     <p>把每一筆input data都除上255使其值落在0~1之間。</p>
-<pre><code>pca = PCA(n_components=30)                  #使用PCA套件，設定降至30維
-newX_train = pca.fit_transform(X_train)     #用訓練資料配適降階用的半正交矩陣並把轉換後結果存至newX_train
-newX_test = pca.transform(X_test)           #用剛剛找出的矩陣對訓練資料也進行轉換，存入newX_test
-newX_train = newX_train/255                 #將資料進行歸一化(normalization)
-newX_test = newX_test/255                   #這邊除255等同於sklearn的MinMaxScaler </pre></code>
+<pre><code>pca = PCA(n_components=30)
+newX_train = pca.fit_transform(X_train)
+newX_test = pca.transform(X_test)
+newX_train = newX_train/255
+newX_test = newX_test/255</pre></code>
   </li>
   <li>
     訓練與辨識：
@@ -80,3 +80,11 @@ print("測試資料辨識率:",np.mean(clf.predict(newX_test) == y_test))
 <p>　　和雖然1棵樹只有84%，但用RandomForest就有92%的辨識率了，且可以注意到訓練資料的辨識率不一定會再是100%。</p>
 <p>　　最後幾個Ensemble Methods有點小失誤，沒注意看就直接用了預設，而Bagging的預設就是DecisionTree，</p>
 <p>　　所以其實跟使用RandomForest是一樣的。</p>
+
+### 心得
+<p>因為寫這份作業的同時也有著期末人臉辨識的專案要進行，所以在這兩邊交錯的嘗試下真的覺得自己比原本進步了很多，一開始作業一時還完全用不好的sklearn套件，現在可以說是相當習慣了。再來3個這次作業中讓我覺得特別意義重大的收穫就是對標準化(normalization)，或著說是歸一化的意識，一開始在做這份手寫字辨識時就是缺了這一個步驟，結果SVC辨識的一蹋糊塗且每次訓練還都要用2個小時，怎麼調參數都不見有改善的情形，真的困擾了很久甚至一度放棄了使用SVC的念頭。</p>
+<p>直到後來完成後還有時間才又回來開始查找導致SVC辨識率低下的原因，最後在嘗試了normalization後獲得了驚人的改善，一次給了這麼強的印象我以後想要再忘掉應該是挺難了吧哈哈。還有個意外的收穫是連正則化(Regularization)的觀念也一起弄清楚了，因為正則化、標準化這兩個的中文差不多，看了實在分不清楚就閱讀了不少的資料，且剛開始搜尋overfitting時，跳出來的也幾乎都是l1,l2正則化相關的文章。</p>
+<p>再來則分別是PCA不同components下的比較和各種辨識器間的比較，如果沒有進行這次PCA的實驗，恐怕還真不會意識到這個方法是這麼的強大，即便降至10維了仍保有相當水準的辨識率，這樣以後使用時可以比較放心的嘗試降到更低維，而不會受制於保守的思想放棄這些可能。</p>
+<p>而進行辨識器間的比較時不僅是更熟練了sklearn套件的使用，同時也有了對這整學期所學的知識進行總複習的感覺，在使用某種辨識器時想著其運作的方法，為什麼會得到這些結果等等，在實做中體現真的可以說是最棒的複習了，也謝謝老師這一學的教導和助教們的辛勞，讓我可以在這麼好的環境下學習這有趣的一門課。</p>
+<p>　　</p>
+<p>　　</p>
